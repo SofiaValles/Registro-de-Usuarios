@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #f2e9e4;
 }
 
 .logo {
@@ -42,10 +43,38 @@
 }
 
 .pokemon-container {
-  background-color: #22223b;
+  background-color: #59db31;
   color: #f2e9e4;
   min-height: 100vh;
   padding: 2rem;
   border-radius: 16px;
 }
+button {
+  background-color: #ffbb00;
+  color: #000000;
+  border: none;
+  border-color: aqua;
+  padding: 1rem 2rem;
+  margin: 1rem;
+  border-radius: 38px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 
+}
+
+entry {
+color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+
+}
+input {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  color: #2619e0;
+  background-color: #f2e9e4;
+}
