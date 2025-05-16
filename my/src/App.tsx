@@ -1,3 +1,4 @@
+/*
 import './App.css'
 function Profile() {
     return (
@@ -18,4 +19,13 @@ function Profile() {
       </section>
     );
   }
-  
+  */
+ import './App.css'
+ function Pokemon() {
+    return (
+      <link
+        href="https://pokeapi.co/"
+        rel="icon"
+      />
+    );
+  }
