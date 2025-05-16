@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+.pokemon-container {
+  background-color: #22223b;
+  color: #f2e9e4;
+  min-height: 100vh;
+  padding: 2rem;
+  border-radius: 16px;
+}
+
