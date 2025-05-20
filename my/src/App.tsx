@@ -1,53 +1,82 @@
+/* Formulario de Registro de Usuarios
+Nombre, email, contraseña, género, aceptación de términos.
+Validación de campos y resumen al enviar.
+*/
 import React, { useState } from 'react';
 import './App.css';
 
-function Pokemon() {
-  const [pokemonName, setPokemonName] = useState('');
-  const [pokemonData, setPokemonData] = useState<any>(null);
-  const [error, setError] = useState('');
+function App() {
+    const [form, setForm] = useState({
+        nombre: '',
+        apellido: '',
+        email: '',
+        contrasena: '',
+        genero: '',
+        terminos: false,
+    });
+    const [resumen, setResumen] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPokemonName(e.target.value);
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value, type, checked } = e.target;
+        setForm(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
 
-  const handleSearch = async () => {
-    setError('');
-    setPokemonData(null);
-    if (!pokemonName) return;
-    try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`);
-      if (!response.ok) {
-        setError('Pokémon no encontrado');
-        return;
-      }
-      const data = await response.json();
-      setPokemonData(data);
-    } catch (err) {
-      setError('Error al buscar el Pokémon');
-    }
-  };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!form.terminos) {
+            alert('Debes aceptar los términos y condiciones');
+            return;
+        }
+        setResumen(
+            `Nombre: ${form.nombre}\nApellido: ${form.apellido}\nEmail: ${form.email}\nGénero: ${form.genero}`
+        );
+    };
 
-  return (
-    <div className="pokemon-container">
-      <h1>Busca un Pokémon</h1>
-      <input
-        type="text"
-        value={pokemonName}
-        onChange={handleChange}
-        placeholder="Ejemplo: Eevee"
-      />
-      <button onClick={handleSearch}>Buscar</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {pokemonData && (
-        <div className="pokemon-info">
-          <h2>{pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}</h2>
-          <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
-          <p><strong>Tipo:</strong> {pokemonData.types.map((t: any) => t.type.name).join(', ')}</p>
-          <p><strong>Habilidades:</strong> {pokemonData.abilities.map((a: any) => a.ability.name).join(', ')}</p>
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Nombre:
+                    <input type="text" name="nombre" value={form.nombre} onChange={handleChange} required />
+                </label>
+                <label>
+                    Apellido:
+                    <input type="text" name="apellido" value={form.apellido} onChange={handleChange} required />
+                </label>
+                <label>
+                    Email:
+                    <input type="email" name="email" value={form.email} onChange={handleChange} required />
+                </label>
+                <label>
+                    Contraseña:
+                    <input type="password" name="contrasena" value={form.contrasena} onChange={handleChange} required />
+                </label>
+                <label>
+                    Género:
+                    <select name="genero" value={form.genero} onChange={handleChange} required>
+                        <option value="">Seleccione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="femenino">Femenino</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </label>
+                <label>
+                    Acepto los términos y condiciones
+                    <input type="checkbox" name="terminos" checked={form.terminos} onChange={handleChange} required />
+                </label>
+                <button type="submit">Registrar</button>
+            </form>
+            {resumen && (
+                <div>
+                    <h2>Resumen</h2>
+                    <pre>{resumen}</pre>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }
 
-export default Pokemon;
+export default App;
